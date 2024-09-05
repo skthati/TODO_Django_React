@@ -93,7 +93,7 @@ python manage.py migrate
 ```bash
 pip install djangorestframework
 ```
-Add `rest_framework` to `INSTALLED_APPS` in `mytodo/settings.py`.
+Add `rest_framework`, `todo` to `INSTALLED_APPS` in `mytodo/settings.py`.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <hr>  
@@ -172,7 +172,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('todo/', include('todo.urls')),
+    path('api/', include('todo.urls')),
 ]
 
 ```
