@@ -38,8 +38,6 @@
 ]
 ```
 
-```
-
 ![todo_button](frontend/todoapp/public/Todo_button.gif)
 ![Alt text](frontend/todoapp/public/Todo_Checkbox.gif)
 ![Alt text](frontend/todoapp/public/Backend.gif)
