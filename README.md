@@ -36,6 +36,7 @@
     {id:1, title: 'Buy Milk', completed: true },
     {id:2, title: 'Read Book', completed: false}
 ]
+```
 
 ```
 
