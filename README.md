@@ -19,6 +19,8 @@
     <li><a href="#cors">Cors </a></li> 
     <li><a href="#super-user">Super User </a></li>
     <li><a href="#register-app">Register App </a></li>
+    <li><a href="#install-react">Install React </a></li>
+    <li><a href="#todo-componenet"> Todo Component </a></li>
 
 </ol>
 <hr>
@@ -34,8 +36,14 @@
     {id:1, title: 'Buy Milk', completed: true },
     {id:2, title: 'Read Book', completed: false}
 ]
-
 ```
+
+![todo_button](frontend/todoapp/public/Todo_button.gif)
+![Alt text](frontend/todoapp/public/Todo_Checkbox.gif)
+![Alt text](frontend/todoapp/public/Backend.gif)
+
+
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <hr>  
@@ -225,6 +233,118 @@ from .models import TodoItem
 admin.site.register(TodoItem)
 ```
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<hr>  
+
+# Install React<a name="install_react"></a>
+
+Open new terminal and go to the folder frontend to create React App.
+
+```bash
+cd frontend
+
+# Create React app with todoapp name
+npx create-react-app todoapp
+cd todoapp
+
+#Bundle the app into static files for production
+npm run build
+
+#start the server
+npm start
+
+# Install Axios 
+npm install axios
+
+
+```
+
+# Todo Componenet <a name="todo_component"></a>
+
+Write below code in `src/components/TodoApp.js
+
+```React
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+
+const TodoApp = () => {
+    const [allTodo, SetAllTodo] = useState([]);
+    const [newTodo, SetNewTodo] = useState("");
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/todo/')
+        .then(response => SetAllTodo(response.data))
+        .catch(error => console.error('Error fetching All todo', error));
+    }, []);
+
+    const handleAddTodo = () => {
+        axios.post('http://localhost:8000/api/todo/', {title: newTodo})
+        .then(response => SetAllTodo([...allTodo, response.data]))
+        .catch(error => console.error('Error adding todo', error));
+        SetNewTodo("");
+    }
+
+    const handleCompleteTodo = (id) => {
+        axios.patch(`http://localhost:8000/api/todo/${id}/`, {completed: true})
+        .then(response => {
+            SetAllTodo(allTodo.map(e => (e.id === id ? response.data : e)));
+        })
+        .catch(error => console.error('Error marking the item to complete', error));
+    };
+
+    return (
+        <div>
+            <h1> ToDo </h1>
+
+            <input
+                type="text"
+                value={newTodo}
+                onChange={(e) => SetNewTodo(e.target.value)}
+                placeholder='New Todo'
+            />
+
+            <button onClick={handleAddTodo}>Add ToDo</button>
+
+            <ul>
+                {allTodo.map(todo => (
+                    <li key={todo.id}>
+                        <span> {todo.title } </span>
+                        <button onClick={() => handleCompleteTodo(todo.id)}>
+                            {todo.completed ? 'Completed' : 'Complete'}
+                        </button>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+} ;
+
+export default TodoApp;
+```
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<hr>  
+
+# Update app.js
+
+```React
+import logo from './logo.svg';
+import './App.css';
+import TodoApp from './components/TodoApp';
+
+function App() {
+  return (
+    <div className="App">
+      <TodoApp />
+    </div>
+  );
+}
+
+export default App;
+
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <hr>  
